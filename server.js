@@ -1,38 +1,27 @@
 const express = require('express');
-let students = require('./data/students.json');
 const app = express();
 const port = 3000;
+const moment = require('moment');
+
+//port és dátum-idő loggolása, mely esemény hatására a terminálba ír:
+const logger = (req, res, next) => {
+	console.log(
+		`${req.protocol}://${req.get('host')}${req.originalUrl}: ${moment().format()}		
+	`	);
+	next();
+};
+
+app.use(logger);
 
 app.get('/', (req, res) => {
 	res.send(
 		`<h1>Hello World!  It's Codecool! </h1>
 		`);		
-})
-
-app.get('/students', (req, res) => {
-	res.send(students);
-})
-
-app.get('/students/1', (req, res) => {
-	res.send(students[0]);
-})
-
-app.get('/status/active', (req, res) => {
-	let active;
-	res.send(
-		students.filter(item => JSON.stringify(item).includes(true))	
-		);
-})
-
-app.get('/status/finished', (req, res) => {
-	let active;
-	res.send(
-		students.filter(item => JSON.stringify(item).includes(false))
-		
-	);
-})
+});
 
 
+app.use('/api/students', require('./routes/api/persons'));
+app.use('/api/status', require('./routes/api/status'));
 
 
 app.listen(port, () => {
