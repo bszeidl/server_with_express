@@ -19,6 +19,10 @@ app.get('/', (req, res) => {
 		`);		
 });
 
+//body parser middleware initialization to create new student, this needed fo post request
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 
 app.use('/api/students', require('./routes/api/persons'));
 app.use('/api/status', require('./routes/api/status'));
