@@ -20,6 +20,8 @@ router.get('/:a', (req, res) => {
 	}	
 });
 
+
+
 //create a new student, in the server file body parser initialization is needed
 
 router.post('/:a', (req, res) => {
